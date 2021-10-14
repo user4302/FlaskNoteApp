@@ -1,0 +1,1 @@
+# the views/url endpoints of the frontend of the website
