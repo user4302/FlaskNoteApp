@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash # password hashing
 from . import db
+from flask_login import login_user, login_required, logout_user, current_user
 
 auth = Blueprint('auth', __name__)
 
@@ -15,6 +16,7 @@ def login():
         if user:
             if check_password_hash(user.password, password):
                 flash('Logged in Successfully!', category='success')
+                login_user(user, remember=True) # saves user session in the flask server to maintain the login/out status
                 return redirect(url_for('views.home'))
             else:
                 flash('Incorrect Password, try Again', category='error')
@@ -24,8 +26,10 @@ def login():
     return render_template("login.html", boolean=True) # 2nd+ argument can be passed to the html file to be used in jinja syntax
 
 @auth.route('/logout')
+@login_required
 def logout():
-    return render_template("logout.html")
+    logout_user() # simply logs out the current user
+    return redirect(url_for('auth.login'))
     
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
@@ -54,6 +58,7 @@ def register():
             db.session.add(new_user) # add new user to database
             db.session.commit() # update database with changes
 
+            login_user(user, remember=True)
             flash('Account Created!', category='success')
             return redirect(url_for('views.home'))
 
