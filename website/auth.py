@@ -23,7 +23,7 @@ def login():
         else:
                 flash('Email does not exist', category='error')
 
-    return render_template("login.html", boolean=True) # 2nd+ argument can be passed to the html file to be used in jinja syntax
+    return render_template("login.html", user=current_user) # 2nd+ argument can be passed to the html file to be used in jinja syntax
 
 @auth.route('/logout')
 @login_required
@@ -62,4 +62,4 @@ def register():
             flash('Account Created!', category='success')
             return redirect(url_for('views.home'))
 
-    return render_template("register.html")
+    return render_template("register.html", user=current_user)
