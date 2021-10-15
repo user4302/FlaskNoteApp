@@ -14,4 +14,4 @@ Made using the following tutorial: https://www.youtube.com/watch?v=dam0GPOAvVI
 
 ## License
 MIT
-**Free Software, Hell Yeah!**
+**Free Software**
