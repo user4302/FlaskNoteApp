@@ -2,9 +2,9 @@ from flask import Blueprint, render_template, request, flash
 
 auth = Blueprint('auth', __name__)
 
-@auth.route('/login', methods=['GET', 'POST'])
+@auth.route('/login', methods=['GET', 'POST']) # 'method' gives the ability to accept GET and POST requests
 def login():
-    return render_template("login.html", boolean=True)
+    return render_template("login.html", boolean=True) # 2nd+ argument can be passed to the html file to be used in jinja syntax
 
 @auth.route('/logout')
 def logout():
@@ -14,11 +14,13 @@ def logout():
 def register():
     
     if request.method == 'POST':
+        # getting the data within the form as an 'ImmutableMultiDict' Object 
         email = request.form.get('email')
         firstName = request.form.get('firstName')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
+        # flashes a notification banner if any of the following are true
         if len(email) < 4:
             flash('email must be greater than 4 characters', category='error')
         elif len(firstName) <2:

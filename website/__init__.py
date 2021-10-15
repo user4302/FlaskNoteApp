@@ -1,22 +1,24 @@
 # makes the website folder into a python package
 # when importing the website folder, the commands in this file will be run
 
-from flask import Flask
+from flask import Flask 
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
 
 def create_app():
-    app = Flask(__name__)
-    app.config['SECRET_KEY'] = '^R795wEm#Y!$jzS8#*9%3pu*ob6huhmA$^f4N7mNK2%J9K2C7ZWZb@9@WU5Nd553'
-    app.config['SQLALCHEMY_DATABASE_URI'] - f'sqlite:///{DB_NAME}'
-    db.init_app(app)
+    app = Flask(__name__) # initialize app
+    app.config['SECRET_KEY'] = '^R795wEm#Y!$jzS8#*9%3pu*ob6sockA$^f4N7mNK2%J9K2C7ZWZb@9@WU5Nd553' #used to encrypt session cookies
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}' # location of the database
+    db.init_app(app) # point db at the app that it wil connect with
     
-    from .views import views
+    # importing the blueprints
+    from .views import views 
     from .auth import auth
 
+    # registering the blueprints
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
 
-    return app
+    return app 

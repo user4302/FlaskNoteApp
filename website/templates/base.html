@@ -1,8 +1,10 @@
+<!-- parts can be overridden using sub templates -->
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- import Bootstrap CSS -->
         <link
         rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -15,9 +17,10 @@
         crossorigin="anonymous"
         />
 
+        <!-- can be overridden in the child template as they will inherit this -->
         <title>
-          {% block title %}
-            Home
+          {% block title %} 
+            Base
           {% endblock %}
         </title>
     </head>
@@ -35,7 +38,7 @@
                 </div>
             </div>
         </nav>
-
+        <!-- the flash notification banner is called here -->
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
             {% for category,message in messages %}
@@ -58,10 +61,14 @@
           {%  endif %}
         {% endwith %}
 
+        <!-- content block that can be overridden by child templates -->
         <div class="container">
             {% block content %}
+              <p>Content</p>
             {% endblock %}
         </div>
+        
+    <!-- JS related to the Bootstrap CSS -->
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -78,9 +85,10 @@
       crossorigin="anonymous"
     ></script>
 
+    <!-- importing custom javascript from a file -->
     <script
       type="text/javascript"
-      src="{{ url_for('static', filename='index.js') }}"
+      src="{{ url_for('static', filename='index.js') }}" 
     ></script>
     </body>
 </html>
