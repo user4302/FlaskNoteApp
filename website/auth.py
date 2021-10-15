@@ -58,7 +58,7 @@ def register():
             db.session.add(new_user) # add new user to database
             db.session.commit() # update database with changes
 
-            login_user(user, remember=True)
+            login_user(new_user, remember=True)
             flash('Account Created!', category='success')
             return redirect(url_for('views.home'))
 
