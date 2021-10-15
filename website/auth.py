@@ -20,14 +20,14 @@ def register():
         password2 = request.form.get('password2')
 
         if len(email) < 4:
-            pass
+            flash('email must be greater than 4 characters', category='error')
         elif len(firstName) <2:
-            pass
+            flash('First Name must be greater than 2 characters', category='error')
         elif password1 != password2:
-            pass
+            flash('Passwords do not match', category='error')
         elif len(password1) < 7:
-            pass
+            flash('Password must be at least 7 characters', category='error')
         else:
-            pass
-
+            flash('Account Created!', category='success')
+            
     return render_template("register.html")
