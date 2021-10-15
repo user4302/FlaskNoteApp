@@ -7,6 +7,20 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST']) # 'method' gives the ability to accept GET and POST requests
 def login():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        user = User.query.filter_by(email=email).first() # when querying a specific item
+        if user:
+            if check_password_hash(user.password, password):
+                flash('Logged in Successfully!', category='success')
+                return redirect(url_for('views.home'))
+            else:
+                flash('Incorrect Password, try Again', category='error')
+        else:
+                flash('Email does not exist', category='error')
+
     return render_template("login.html", boolean=True) # 2nd+ argument can be passed to the html file to be used in jinja syntax
 
 @auth.route('/logout')
@@ -23,8 +37,11 @@ def register():
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
+        user = User.query.filter_by(email=email).first()
         # flashes a notification banner if any of the following are true
-        if len(email) < 4:
+        if user:
+            flash('Email Already Exists', category='error')
+        elif len(email) < 4:
             flash('email must be greater than 4 characters', category='error')
         elif len(first_name) <2:
             flash('First Name must be greater than 2 characters', category='error')
