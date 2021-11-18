@@ -6,6 +6,7 @@ Made using the following tutorial: https://www.youtube.com/watch?v=dam0GPOAvVI
 1. Setup virtual environment (optional, but recommended)
 1. cd into the root of the project
 1. run: `pip install -r requirements.txt` in your terminal
+1. run `python main.py`
 
 ## Features
 
